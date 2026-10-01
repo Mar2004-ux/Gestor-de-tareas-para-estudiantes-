@@ -4,18 +4,11 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 
+
 function App() {
-  if (window.location.pathname === '/') {
-    window.location.replace('/login')
-    return null
-  }
-
-  if (window.location.pathname === '/login') {
-    return <LoginPage />
-  }
-
-  return <StarterHome />
+  return <LoginPage />
 }
+
 
 function LoginPage() {
   const [email, setEmail] = useState('')
