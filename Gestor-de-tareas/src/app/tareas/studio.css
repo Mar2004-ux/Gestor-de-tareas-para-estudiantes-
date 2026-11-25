@@ -23,3 +23,23 @@
 .calendar{background:#f2dbc2}.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-top:14px}.days a{display:grid;justify-items:center;padding:6px 0;border-radius:9px}.days small{font-size:11px}.days i{width:5px;height:5px;background:currentColor;border-radius:50%}.days a:hover,.days a[aria-current]{background:var(--ink);color:white}
 @media(max-width:740px){.dashboard-grid>.overview{grid-row:1}.overview{grid-template-columns:repeat(auto-fit,minmax(min(245px,100%),1fr))}.dashboard-intro .agenda-notebook{right:4%;scale:.75;transform-origin:right top}}
 @media(max-width:480px){.dashboard .header-inner{gap:6px}.dashboard nav a{padding:6px 8px}.dashboard-intro .agenda-notebook{scale:.47;right:3%}.dashboard .dashboard-intro{min-height:150px}.dashboard .field-row{grid-template-columns:minmax(0,1fr)}}
+
+.dashboard .filter-actions {
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+.dashboard .task-state {
+  min-height: 44px;
+  gap: 8px;
+  padding-inline: 16px;
+}
+.task-state span {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #c8f460;
+  color: #193e32;
+}

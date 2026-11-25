@@ -59,8 +59,8 @@ export function Agenda({ filtros, materias, tareas, hoy, error }: {
                   <label>Fecha límite hasta<input type="date" name="hasta" defaultValue={filtros.hasta} /></label>
                   {vista === 'tareas' && <Filter name="clasificacion" label="Clasificación" options={clasificaciones} value={filtros.clasificacion} />}
                   <div className="filter-actions">
-                    <button className="button secondary">Filtrar</button>
                     <Link href={'/tareas?vista=' + vista} className="text-button">Limpiar</Link>
+                    <button className="button" type="submit">Aplicar filtros</button>
                   </div>
                 </form>}
                 {tareasVisibles.length > 0 ? <ul className="task-list">
@@ -73,9 +73,9 @@ export function Agenda({ filtros, materias, tareas, hoy, error }: {
                       </div>
                       {tarea.descripcion && <p className="task-description">{tarea.descripcion}</p>}
                       <div className="task-actions"><EstadoForm tarea={tarea} /></div>
-                      <details className="task-edit"><summary>Editar tarea</summary>
+                      {vista === 'tareas' && <details className="task-edit"><summary>Editar tarea</summary>
                         <TareaForm tarea={tarea} materias={materias} fechaMinima={tarea.fecha_creacion} />
-                      </details>
+                      </details>}
                     </li>
                   })}
                 </ul> : <p className="empty">

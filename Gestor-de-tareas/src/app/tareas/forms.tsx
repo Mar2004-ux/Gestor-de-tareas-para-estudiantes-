@@ -42,8 +42,9 @@ export function EstadoForm({ tarea }: { tarea: Tarea }) {
     <form action={action}>
       <input type="hidden" name="id" value={tarea.id} />
       <input type="hidden" name="estado" value={completada ? 'pendiente' : 'completada'} />
-      <button className="text-button" disabled={pending}>
-        {pending ? 'Guardando…' : completada ? 'Reabrir' : 'Marcar completada'}
+      <button type="submit" className={completada ? 'button secondary task-state' : 'button task-state'} disabled={pending}>
+        <span aria-hidden="true">{completada ? '↶' : '✓'}</span>
+        {pending ? 'Guardando…' : completada ? 'Reabrir' : 'Marcar como completada'}
       </button>
       <Feedback state={state} />
     </form>
