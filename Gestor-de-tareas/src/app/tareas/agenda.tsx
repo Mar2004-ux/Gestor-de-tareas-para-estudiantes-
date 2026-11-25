@@ -39,7 +39,7 @@ export function Agenda({ filtros, materias, tareas, hoy, error }: {
       <main className="dashboard-shell dashboard-main">
         <div className="dashboard-intro">
           <p>{new Intl.DateTimeFormat('es-CO', {weekday:'long', month:'long', day:'numeric', timeZone:'UTC'}).format(new Date(hoy))}</p>
-          <div className="art" aria-hidden="true"><i>✓</i></div><h1>{titulos[vista]}</h1>
+          <div className="agenda-notebook" aria-hidden="true"><i>✓</i></div><h1>{titulos[vista]}</h1>
           {vista !== 'materias' && vista !== 'nueva' && <Link className="button" href="/tareas?vista=nueva">＋ Nueva tarea</Link>}
         </div>
         {error ? <p className="feedback error" role="alert">No pudimos cargar tus datos. Intenta recargar la página.</p> : (
