@@ -14,7 +14,12 @@ export default async function AccessPage({ searchParams }: {
     if (data?.claims.sub) redirect('/tareas')
   }
 
-  const register = modo === 'registro'
+  const mode = modo === 'registro' ? 'register' : modo === 'reenviar' ? 'resend' : 'login'
+  const copy = {
+    register: ['Crea tu cuenta', 'Empieza a organizar tus entregas.'],
+    resend: ['Reenvía el correo', 'Ingresa el correo con el que te registraste.'],
+    login: ['Inicia sesión', 'Continúa organizando tu vida académica.'],
+  }[mode]
   return (
     <main className="login-page">
       <section className="login-aside" aria-label="Organiza tus tareas">
@@ -27,10 +32,10 @@ export default async function AccessPage({ searchParams }: {
       <section className="login-main">
         <div className="mobile-brand"><span className="brand-mark" aria-hidden="true">a.</span>Aula</div>
         <div className="login-form-wrap">
-          <h2>{register ? 'Crea tu cuenta' : 'Inicia sesión'}</h2>
-          <p className="form-intro">{register ? 'Empieza a organizar tus entregas.' : 'Continúa organizando tu vida académica.'}</p>
-          {confirmacion === 'error' && <p className="form-error" role="alert">El enlace de confirmación es inválido o ya venció.</p>}
-          <AccessForm key={modo} register={register} configured={Boolean(supabase)} />
+          <h2>{copy[0]}</h2>
+          <p className="form-intro">{copy[1]}</p>
+          {confirmacion === 'error' && <p className="form-error" role="alert">El enlace de confirmación no se pudo usar. Si tu correo ya está confirmado, inicia sesión. Si sigue pendiente, solicita otro enlace.</p>}
+          <AccessForm key={mode} mode={mode} configured={Boolean(supabase)} />
         </div>
       </section>
     </main>

@@ -436,3 +436,8 @@
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 }
+
+.confirm-main {
+  min-height: 100svh;
+  background: #fffefa;
+}

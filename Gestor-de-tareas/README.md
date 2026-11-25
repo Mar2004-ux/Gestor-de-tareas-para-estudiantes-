@@ -8,13 +8,13 @@ Aplicación Next.js para registrar materias y tareas académicas. Usa Supabase A
 2. Copia la **Project URL** y la **Publishable key** del proyecto. Los nombres de las variables están en [`.env.example`](.env.example). La aplicación usa la clave publicable y nunca necesita una clave de servicio.
 3. En **Authentication → Providers**, habilita el proveedor de correo y el registro de usuarios. Mantén la confirmación de correo y configura un servidor SMTP propio para que puedan recibir correos estudiantes ajenos al equipo de Supabase.
 4. En **Authentication → URL Configuration**, configura **Site URL** con el dominio público de producción. Para desarrollo, usa un proyecto de Supabase de pruebas con `http://localhost:3000` como **Site URL**.
-5. En **Authentication → Email Templates → Confirm signup**, usa este enlace en la plantilla para que la confirmación cree la sesión y abra el panel.
+5. En **Authentication → Email Templates → Confirm signup**, usa este enlace en la plantilla. Al abrirlo, la persona debe pulsar **Confirmar correo** para crear la sesión y abrir el panel. Así, una vista previa automática del correo no consume el enlace.
 
    ```html
    <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}">Confirmar correo</a>
    ```
 
-   Si mantienes la plantilla predeterminada de Supabase, el usuario confirma allí y regresa a Aula para iniciar sesión con su contraseña.
+   Si mantienes la plantilla predeterminada de Supabase, abre el enlace en el mismo navegador en el que solicitaste el registro para que Aula complete la sesión. En la pantalla de acceso también está la opción **Reenviar correo de confirmación**.
 
 ## Desarrollo
 
