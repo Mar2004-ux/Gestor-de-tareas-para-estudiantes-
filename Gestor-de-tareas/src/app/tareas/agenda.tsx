@@ -39,13 +39,13 @@ export function Agenda({ filtros, materias, tareas, hoy, error }: {
           {vista !== 'materias' && vista !== 'nueva' && <Link className="button" href="/tareas?vista=nueva">＋ Nueva tarea</Link>}
         </div>
         {error ? <p className="feedback error" role="alert">No pudimos cargar tus datos. Intenta recargar la página.</p> : (
-          <div className="single-view">
+          <div className={vista === 'inicio' ? 'dashboard-grid' : 'single-view'}>
             <div className="dashboard-content">
               {(vista === 'inicio' || vista === 'tareas') && <section className="panel" aria-labelledby="lista-tareas">
                 <h2 id="lista-tareas">{vista === 'inicio' ? 'Tareas pendientes' : 'Todas las tareas'}</h2>
                 {vista === 'tareas' && tareas.length > 0 && <form className="filters" action="/tareas">
                   <input type="hidden" name="vista" value={vista} />
-                  {filtros.dia && <input type="hidden" name="dia" value={filtros.dia} />}
+                  {filtros.dia && <label>Día del calendario<input type="date" name="dia" defaultValue={filtros.dia} /></label>}
                   <label>Materia<select name="materia" defaultValue={filtros.materia ?? ''}>
                     <option value="">Todas</option>
                     {materias.map(materia => <option key={materia.id} value={materia.id}>{materia.nombre}</option>)}
@@ -85,6 +85,7 @@ export function Agenda({ filtros, materias, tareas, hoy, error }: {
                   : <p className="empty">Para registrar una tarea, <Link href="/tareas?vista=materias">crea primero una materia</Link>.</p>}
               </section>}
             </div>
+            {vista === 'inicio' && <Resumen tareas={tareas} hoy={hoy} />}
             {vista === 'materias' && <aside className="panel" id="materias"  aria-labelledby="titulo-materias">
               <h2 id="titulo-materias">Materias</h2>
               <MateriaForm />
@@ -99,6 +100,42 @@ export function Agenda({ filtros, materias, tareas, hoy, error }: {
         )}
       </main>
     </div>
+  )
+}
+
+function Resumen({ tareas, hoy }: { tareas: Tarea[]; hoy: string }) {
+  const completadas = tareas.filter(tarea => tarea.estado === 'completada').length
+  const porcentaje = tareas.length ? Math.round(100 * completadas / tareas.length) : 0
+  const semana = Array.from({ length: 7 }, (_, dia) =>
+    new Date(Date.parse(hoy) + dia * 86_400_000).toISOString().slice(0, 10)
+  )
+  const diaCorto = new Intl.DateTimeFormat('es-CO', { weekday: 'short', timeZone: 'UTC' })
+
+  return (
+    <aside className="overview">
+      <section className="progress">
+        <div><h2>Tu progreso</h2><p>{completadas} de {tareas.length} tareas completadas</p></div>
+        <strong className="ring" style={{ backgroundImage: `conic-gradient(#c8f460 ${porcentaje}%, #436450 0)` }}>
+          <span>{porcentaje}%</span>
+        </strong>
+      </section>
+      <section className="calendar">
+        <h2>Próximos 7 días</h2>
+        <div className="days">
+          {semana.map(fecha => {
+            const pendientes = tareas.filter(tarea => tarea.fecha_limite === fecha && tarea.estado === 'pendiente').length
+            return (
+              <Link key={fecha} href={`/tareas?vista=tareas&estado=pendiente&dia=${fecha}`}
+                aria-label={`${fechaLegible(fecha)}, ${pendientes} pendientes`}>
+                <small>{diaCorto.format(new Date(fecha)).slice(0, 2)}</small>
+                <b>{Number(fecha.slice(-2))}</b>
+                <i style={{ opacity: pendientes ? 1 : 0 }} />
+              </Link>
+            )
+          })}
+        </div>
+      </section>
+    </aside>
   )
 }
 
