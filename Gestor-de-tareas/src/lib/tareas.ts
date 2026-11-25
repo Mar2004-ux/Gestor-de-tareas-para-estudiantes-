@@ -4,10 +4,11 @@ export const clasificaciones = ['normal', 'urgente', 'atrasada'] as const
 
 export type Prioridad = typeof prioridades[number]
 export type Estado = typeof estados[number]
-export type Materia = { id: string; nombre: string; codigo: string; archivada: boolean }
+export type Materia = { id: string; nombre: string; codigo: string; archivada: boolean; docente?: string | null }
 export type Tarea = {
   id: string
   materia_id: string
+  minutos?: number | null
   titulo: string
   descripcion: string
   fecha_creacion: string

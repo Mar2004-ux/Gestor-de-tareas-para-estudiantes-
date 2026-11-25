@@ -17,6 +17,7 @@ export function MateriaForm() {
     <form action={action} className="field-stack">
       <label>Nombre<input name="nombre" placeholder="Ej. Cálculo" required maxLength={120} /></label>
       <label>Código<input name="codigo" placeholder="Ej. CAL" required maxLength={40} /></label>
+      <label>Docente (opcional)<input name="docente" maxLength={100} /></label>
       <Feedback state={state} />
       <button className="button secondary" disabled={pending}>{pending ? 'Guardando…' : 'Guardar materia'}</button>
     </form>
@@ -65,6 +66,7 @@ export function TareaForm({ materias, fechaMinima, tarea }: {
       <label>Título<input name="titulo" value={titulo} onChange={event => setTitulo(event.target.value)} required maxLength={160} /></label>
       <label>Descripción (opcional)<textarea name="descripcion" value={descripcion}
         onChange={event => setDescripcion(event.target.value)} rows={3} maxLength={2000} /></label>
+      <label>Tiempo estimado (minutos)<input type="number" name="minutos" min={1} max={1440} defaultValue={tarea?.minutos ?? ''} /></label>
       <div className="field-row">
         <label>Materia<select name="materia_id" value={materia} onChange={event => setMateria(event.target.value)} required>
           <option value="" disabled>Selecciona una materia</option>
